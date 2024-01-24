@@ -9,11 +9,11 @@ import org.bukkit.persistence.PersistentDataType;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TestItem {
+public class TreeCutItem {
     public ItemStack testItem;
     public static final NamespacedKey TEST_ITEM = new NamespacedKey("ci", "test_item");
     public static final int TestItem = 0;
-    public TestItem() {
+    public TreeCutItem() {
         // make minimessage usable as mm
         var mm = MiniMessage.miniMessage();
 

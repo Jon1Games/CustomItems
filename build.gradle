@@ -1,5 +1,6 @@
 plugins {
     id 'java'
+    id 'com.github.johnrengelman.shadow' version '7.1.2'
 }
 
 group = 'de.jonas'
@@ -15,10 +16,15 @@ repositories {
         name = "sonatype"
         url = "https://oss.sonatype.org/content/groups/public/"
     }
+    maven {
+        url = "https://repo.codemc.org/repository/maven-public/"
+    }
 }
 
 dependencies {
-compileOnly "io.papermc.paper:paper-api:1.20.2-R0.1-SNAPSHOT"
+    compileOnly "io.papermc.paper:paper-api:1.20.2-R0.1-SNAPSHOT"
+    implementation('com.zaxxer:HikariCP:5.1.0')
+    implementation "dev.jorel:commandapi-bukkit-shade:9.2.0"
 }
 
 def targetJavaVersion = 17
@@ -44,4 +50,10 @@ processResources {
     filesMatching('paper-plugin.yml') {
         expand props
     }
+}
+
+shadowJar {
+    archiveBaseName.set('customitems')
+    archiveClassifier.set('')
+    relocate("dev.jorel.commandapi", "de.jonas.customitems.commandapi")
 }

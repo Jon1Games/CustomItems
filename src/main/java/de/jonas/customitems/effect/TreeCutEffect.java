@@ -1,7 +1,7 @@
 package de.jonas.customitems.effect;
 
 
-import de.jonas.customitems.items.TestItem;
+import de.jonas.customitems.items.TreeCutItem;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -10,7 +10,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.persistence.PersistentDataType;
 
-public class TreeCut implements Listener {
+public class TreeCutEffect implements Listener {
     @EventHandler
     public void onBlockBreak(BlockBreakEvent event) {
         Player player = event.getPlayer();
@@ -23,9 +23,9 @@ public class TreeCut implements Listener {
 
             //
             if (player.getInventory().getItemInMainHand() == null) return;
-            if (!player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().has(TestItem.TEST_ITEM, PersistentDataType.INTEGER)) return;
+            if (!player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().has(TreeCutItem.TEST_ITEM, PersistentDataType.INTEGER)) return;
             // Check if the used tool is an spezified tool
-            if (player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(TestItem.TEST_ITEM, PersistentDataType.INTEGER) == 0) {
+            if (player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(TreeCutItem.TEST_ITEM, PersistentDataType.INTEGER) == 0) {
                 // Cancel the event to prevent normal block breaking
                 event.setCancelled(true);
 
