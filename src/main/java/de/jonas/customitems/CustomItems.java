@@ -1,7 +1,7 @@
 package de.jonas.customitems;
 
 import de.jonas.customitems.commands.GiveItemCommand;
-import de.jonas.customitems.effect.TreeCutEffect;
+import de.jonas.customitems.listener.TreeCutListener;
 import de.jonas.customitems.listener.ClickedCustomItemListener;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginManager;
@@ -52,6 +52,6 @@ public final class CustomItems extends JavaPlugin {
         PluginManager pm = Bukkit.getPluginManager();
 
         pm.registerEvents(new ClickedCustomItemListener(), this);
-        pm.registerEvents(new TreeCutEffect(), this);
+        pm.registerEvents(new TreeCutListener(), this);
     }
 }

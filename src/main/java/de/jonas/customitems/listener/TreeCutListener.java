@@ -1,4 +1,4 @@
-package de.jonas.customitems.effect;
+package de.jonas.customitems.listener;
 
 
 import de.jonas.customitems.items.TreeCutItem;
@@ -10,7 +10,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.persistence.PersistentDataType;
 
-public class TreeCutEffect implements Listener {
+public class TreeCutListener implements Listener {
     @EventHandler
     public void onBlockBreak(BlockBreakEvent event) {
         Player player = event.getPlayer();
