@@ -19,12 +19,20 @@ repositories {
     maven {
         url = "https://repo.codemc.org/repository/maven-public/"
     }
+    maven {
+        name = "CodeMC"
+        url = uri("https://repo.codemc.io/repository/maven-public/")
+    }
 }
 
 dependencies {
     compileOnly "io.papermc.paper:paper-api:1.20.2-R0.1-SNAPSHOT"
+    implementation("de.tr7zw:item-nbt-api:2.12.2")
     implementation('com.zaxxer:HikariCP:5.1.0')
     implementation "dev.jorel:commandapi-bukkit-shade:9.2.0"
+    implementation('org.mariadb.jdbc:mariadb-java-client:3.3.2') {
+        exclude group: 'com.github.waffle', module: 'waffle-jna'
+    }
 }
 
 def targetJavaVersion = 17
@@ -56,4 +64,5 @@ shadowJar {
     archiveBaseName.set('customitems')
     archiveClassifier.set('')
     relocate("dev.jorel.commandapi", "de.jonas.customitems.commandapi")
+    relocate("de.tr7zw.changeme.nbtapi", "org.gaminglounge.skyblock.nbtapi")
 }

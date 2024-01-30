@@ -16,8 +16,14 @@ public final class CustomItems extends JavaPlugin {
     public static CustomItems INSTANCE;
     public static String PREFIX;
     public Logger logger;
+    public DataBasePool dbPool;
 
     public void onLoad() {
+        INSTANCE = this;
+        PREFIX = "[CI] ";
+
+        dbPool = new DataBasePool();
+
         this.logger = this.getLogger();
 
         CommandAPI.onLoad(new CommandAPIBukkitConfig(this));
@@ -27,8 +33,8 @@ public final class CustomItems extends JavaPlugin {
     @Override
     public void onEnable() {
         // Plugin startup logic
-        INSTANCE = this;
-        PREFIX = "[CI] ";
+
+        dbPool.init();
 
         this.listener();
 

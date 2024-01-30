@@ -23,6 +23,7 @@ public class TreeCutListener implements Listener {
 
             //
             if (player.getInventory().getItemInMainHand() == null) return;
+            if (player.getInventory().getItemInMainHand().getItemMeta()== null) return;
             if (!player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().has(TreeCutItem.TEST_ITEM, PersistentDataType.INTEGER)) return;
             // Check if the used tool is an spezified tool
             if (player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(TreeCutItem.TEST_ITEM, PersistentDataType.INTEGER) == 0) {
