@@ -16,10 +16,10 @@ public class DataBasePool {
     public void init() {
         HikariConfig config = new HikariConfig();
         config.setPoolName("db-hikari");
-        config.setDriverClassName("org.mariadb.jdbc.Driver");
-        config.setJdbcUrl("jdbc:mariadb://192.168.178.31:3306/GamingLoungePlugin");
-        config.setUsername("GamingLoungePlugin");
-        config.setPassword("-J{gZ/09O~M|q?@=zN2_uM'T>yyD3+?Nw_{f%$Zyo}R3M{%!poG}M)K3Giqq{$JUqa1=]D2]'.wCi_y9kjuqt,_QCf9eitdnV_aq$ce43OZ[wya*6>DVL2ie7e)NJ5Hy");
+        config.setDriverClassName("org.mariadb.jdbc.Driver"); 
+        config.setJdbcUrl("jdbc:mariadb://IP-ADRESS:PORT/DARTABASE_NAME");
+        config.setUsername("ACCOUNT_NAME");
+        config.setPassword("PASSWORT");
         config.setMaximumPoolSize(10);
         config.setMinimumIdle(1);
         config.setMaxLifetime(0);
