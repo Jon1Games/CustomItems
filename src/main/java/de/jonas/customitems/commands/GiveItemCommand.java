@@ -8,7 +8,6 @@ import dev.jorel.commandapi.arguments.IntegerArgument;
 import dev.jorel.commandapi.arguments.StringArgument;
 import org.bukkit.inventory.ItemStack;
 
-import java.io.ByteArrayOutputStream;
 import java.sql.*;
 
 import de.tr7zw.changeme.nbtapi.NBT;
@@ -16,19 +15,10 @@ import de.tr7zw.changeme.nbtapi.NBT;
 public class GiveItemCommand {
 
     public GiveItemCommand() {
-        new CommandAPICommand("CustomItem")
-                .withAliases("CItem")
-                .withSubcommand(new CommandAPICommand("new")
-                        .withArguments(new StringArgument("Name"))
-                        .executesPlayer((player, args) -> {
-                            String itemName = (String) args.get("Name");
-
-                            byte[] blob = itemToBlob(player.getInventory().getItemInMainHand());
-
-                            setTableFromDB(CustomItems.INSTANCE.dbPool, itemName, blob);
-                        })
-                )
-                .withSubcommand(new CommandAPICommand("getByName")
+        new CommandAPICommand("CustomItem:get")
+                .withAliases("ci:get")
+                .withPermission("CustomItems.give")
+                .withSubcommand(new CommandAPICommand("byName")
                         .withArguments(new StringArgument("Name"))
                         .executesPlayer((player, arsg) -> {
                             String searchItemName = (String) arsg.get("Name");
@@ -36,37 +26,15 @@ public class GiveItemCommand {
                             player.getInventory().addItem((getTableFromDB(CustomItems.INSTANCE.dbPool, searchItemName)));
                         })
                 )
-                .withSubcommand(new CommandAPICommand("getByID")
+                .withSubcommand(new CommandAPICommand("byID")
                         .withArguments(new IntegerArgument("ItemID"))
                         .executesPlayer((player, args) -> {
-                            int searchItemID = (int) args.get("itemID");
+                            int searchItemID = (int) args.get("ItemID");
 
                             player.getInventory().addItem(getTableFromDBiD(CustomItems.INSTANCE.dbPool, searchItemID));
                         })
                 )
                 .register();
-    }
-
-    public static void setTableFromDB(DataBasePool pool, String itemName, byte[] blob) {
-        String querry = "INSERT INTO `item` (`itemName`, `blob`) VALUES (?, ?);";
-
-        try {
-            Connection con = pool.getConnection();
-            PreparedStatement sel = con.prepareStatement(querry);
-            sel.setObject(1, itemName);
-            sel.setObject(2, blob);
-            sel.executeUpdate();
-            sel.close();
-            con.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    byte[] itemToBlob(ItemStack i) {
-        ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        NBT.itemStackToNBT(i).writeCompound(bos);
-        return bos.toByteArray();
     }
 
     public ItemStack getTableFromDB(DataBasePool pool, String searchItemName) {

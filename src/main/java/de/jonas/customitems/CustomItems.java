@@ -1,13 +1,15 @@
 package de.jonas.customitems;
 
+import de.jonas.customitems.commands.CreateItemCommand;
 import de.jonas.customitems.commands.GiveItemCommand;
-import de.jonas.customitems.listener.TreeCutListener;
-import de.jonas.customitems.listener.ClickedCustomItemListener;
+import de.jonas.customitems.commands.ItemCommand;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import dev.jorel.commandapi.CommandAPI;
 import dev.jorel.commandapi.CommandAPIBukkitConfig;
+
+import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -28,6 +30,8 @@ public final class CustomItems extends JavaPlugin {
 
         CommandAPI.onLoad(new CommandAPIBukkitConfig(this));
         new GiveItemCommand();
+        new CreateItemCommand();
+        new ItemCommand();
     }
 
     @Override
@@ -36,11 +40,15 @@ public final class CustomItems extends JavaPlugin {
 
         dbPool.init();
 
+        try {
+            dbPool.createTable();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
         this.listener();
 
         CommandAPI.onEnable();
-
-        //this.saveDefaultConfig();
 
         logger.log(Level.INFO, "Activatet Plugin");
 
@@ -57,7 +65,6 @@ public final class CustomItems extends JavaPlugin {
     public void listener() {
         PluginManager pm = Bukkit.getPluginManager();
 
-        pm.registerEvents(new ClickedCustomItemListener(), this);
-        pm.registerEvents(new TreeCutListener(), this);
+        // pm.registerEvents(new NAME(), this);
     }
 }

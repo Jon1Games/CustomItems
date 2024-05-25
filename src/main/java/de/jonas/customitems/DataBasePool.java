@@ -1,11 +1,9 @@
 package de.jonas.customitems;
 
 
-import java.sql.Connection;
-import java.sql.Driver;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.Enumeration;
+import java.util.logging.Level;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
@@ -62,4 +60,14 @@ public class DataBasePool {
 
         return connection;
     }
+
+    public void createTable() throws SQLException {
+        Connection con = getConnection();
+        String sqlCreate = "CREATE TABLE IF NOT EXISTS item (`itemID` INT NOT NULL AUTO_INCREMENT PRIMARY KEY," +
+                " `itemName` VARCHAR(32) NOT NULL, `blob` BLOB NOT NULL) ENGINE = InnoDB;";
+
+        Statement stmt = con.createStatement();
+        stmt.execute(sqlCreate);
+    }
+
 }
