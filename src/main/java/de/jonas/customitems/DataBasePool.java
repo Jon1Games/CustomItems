@@ -1,10 +1,7 @@
 package de.jonas.customitems;
 
-
 import java.sql.*;
 import java.util.Enumeration;
-import java.util.logging.Level;
-
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 
@@ -15,9 +12,9 @@ public class DataBasePool {
         HikariConfig config = new HikariConfig();
         config.setPoolName("db-hikari");
         config.setDriverClassName("org.mariadb.jdbc.Driver"); 
-        config.setJdbcUrl("jdbc:mariadb://IP-ADRESS:PORT/DARTABASE_NAME");
-        config.setUsername("ACCOUNT_NAME");
-        config.setPassword("PASSWORT");
+        config.setJdbcUrl("jdbc:mariadb://192.168.88.100:3306/customitems");
+        config.setUsername("customitems");
+        config.setPassword("F5WRdVlaFuiBJUJPrTzmLZuGtqBO0kQFCgE8El3nSoJimDrydgv6PDpj9Od7JH3Esp6vWJby4huNaCJ7ja2g5xswy87SaT14LHmhv09oUUgK8ak2o4mzN7smAnzmCNSD");
         config.setMaximumPoolSize(10);
         config.setMinimumIdle(1);
         config.setMaxLifetime(0);
@@ -64,7 +61,7 @@ public class DataBasePool {
     public void createTable() throws SQLException {
         Connection con = getConnection();
         String sqlCreate = "CREATE TABLE IF NOT EXISTS item (`itemID` INT NOT NULL AUTO_INCREMENT PRIMARY KEY," +
-                " `itemName` VARCHAR(32) NOT NULL, `blob` BLOB NOT NULL) ENGINE = InnoDB;";
+                " `itemName` VARCHAR(32) NOT NULL, ´blob´ BLOB NOT NULL) ENGINE = InnoDB;";
 
         Statement stmt = con.createStatement();
         stmt.execute(sqlCreate);

@@ -6,13 +6,15 @@ import de.tr7zw.changeme.nbtapi.NBTContainer;
 import dev.jorel.commandapi.CommandAPICommand;
 import dev.jorel.commandapi.arguments.IntegerArgument;
 import dev.jorel.commandapi.arguments.StringArgument;
+import net.kyori.adventure.text.minimessage.MiniMessage;
+import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
-
 import java.sql.*;
-
 import de.tr7zw.changeme.nbtapi.NBT;
 
 public class GiveItemCommand {
+
+    MiniMessage mm = MiniMessage.miniMessage();
 
     public GiveItemCommand() {
         new CommandAPICommand("CustomItem:get")
@@ -23,15 +25,29 @@ public class GiveItemCommand {
                         .executesPlayer((player, arsg) -> {
                             String searchItemName = (String) arsg.get("Name");
 
-                            player.getInventory().addItem((getTableFromDB(CustomItems.INSTANCE.dbPool, searchItemName)));
+                            ItemStack itemStack = getTableFromDB(CustomItems.INSTANCE.dbPool, searchItemName);
+                            if (itemStack.getType() == Material.BARRIER) {
+                                player.sendMessage(mm.deserialize("<red>An item with this name doesnt exists."));
+                                return;
+                            }
+                            player.getInventory().addItem(itemStack);
                         })
                 )
                 .withSubcommand(new CommandAPICommand("byID")
                         .withArguments(new IntegerArgument("ItemID"))
                         .executesPlayer((player, args) -> {
-                            int searchItemID = (int) args.get("ItemID");
+                            Integer searchItemID = (Integer) args.get("ItemID");
+                            if (searchItemID == null) {
+                                player.sendMessage(mm.deserialize("<red>Du must eine ID eingeben!</red>"));
+                                return;
+                            }
 
-                            player.getInventory().addItem(getTableFromDBiD(CustomItems.INSTANCE.dbPool, searchItemID));
+                            ItemStack itemStack =getTableFromDBiD(CustomItems.INSTANCE.dbPool, searchItemID);
+                            if (itemStack.getType() == Material.BARRIER) {
+                                player.sendMessage(mm.deserialize("<red>An item with this ID doesnt exists."));
+                                return;
+                            }
+                            player.getInventory().addItem(itemStack);
                         })
                 )
                 .register();
@@ -52,8 +68,7 @@ public class GiveItemCommand {
             con.close();
             return item;
         } catch (SQLException e) {
-            e.printStackTrace();
-            return null;
+            return new ItemStack(Material.BARRIER);
         }
     }
 
@@ -72,8 +87,7 @@ public class GiveItemCommand {
             con.close();
             return item;
         } catch (SQLException e) {
-            e.printStackTrace();
-            return null;
+            return new ItemStack(Material.BARRIER);
         }
     }
 }

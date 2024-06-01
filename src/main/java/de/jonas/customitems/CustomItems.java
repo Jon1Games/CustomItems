@@ -3,8 +3,6 @@ package de.jonas.customitems;
 import de.jonas.customitems.commands.CreateItemCommand;
 import de.jonas.customitems.commands.GiveItemCommand;
 import de.jonas.customitems.commands.ItemCommand;
-import org.bukkit.Bukkit;
-import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import dev.jorel.commandapi.CommandAPI;
 import dev.jorel.commandapi.CommandAPIBukkitConfig;
@@ -46,8 +44,6 @@ public final class CustomItems extends JavaPlugin {
             throw new RuntimeException(e);
         }
 
-        this.listener();
-
         CommandAPI.onEnable();
 
         logger.log(Level.INFO, "Activatet Plugin");
@@ -62,9 +58,4 @@ public final class CustomItems extends JavaPlugin {
         logger.log(Level.INFO,"Plugin deaktiviert.");
     }
 
-    public void listener() {
-        PluginManager pm = Bukkit.getPluginManager();
-
-        // pm.registerEvents(new NAME(), this);
-    }
 }

@@ -1,5 +1,3 @@
 .gradle
 .idea
 build
-server
-src/main/java/de/jonas/customitems/DataBasePool.java
